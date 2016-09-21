@@ -3,22 +3,27 @@
 class Carro
 {
 
-  public $cor = "Branco";
+  public $cor;
   private $potencia;
-  private $capacidadeTanqueCombustivel;
-  private $marca = "Ford";
-  private $modelo = "Fiesta";
-  private $anoFabricacao = 2016;
-  private $chassi;
+  private $quantCombustivel;
   
-  public function __construct($cor = "Branco")
+  const MARCA = "Ford";
+  const MODELO = "Fiesta";
+  const ANO = 2016;
+  
+  static private $chassi;
+  
+  private $motor; 
+  
+  public function __construct($cor = "Branco", MotorBase $motor)
   {
     $this->cor = $cor;
+    $this->motor = $motor;
   }
  
   public function __toString()
   {
-    return $this->marca.':' .$this->modelo.':' .$this->anoFabricacao;
+    return self::MARCA.':' .self::MODELO.':' .self::ANO;
   }
   
   public function __set($atributo, $valor)
@@ -48,17 +53,45 @@ class Carro
   
   public function ligar()
   {
-  
+   try{
+   if ($this->marcadorCombustivel() > 0)
+   {
+    $this->motor->ligar(true);
+   }
+      } catch(Exception $e)
+      {
+      echo $e->getMessage();
+      }
   }
-  
+    
   public function desligar()
   {
-  
+    $this->motor->ligar(false);
   }
   
-  public function abastecer()
+  /**
+  * Abastece o carro
+  * @param float $litros
+  * @return float
+  */
+  
+  public function abastecer($litros)
   {
-  
+    $this->quantCombustivel += $litros;
+    return $this->quantCombustivel;
   }
   
+  public function marcadorCombustivel()
+  {
+    if ($this->quantCombustivel < 5)
+    {
+      throw new Exception("Combustivel esta acabando!");
+    }
+    return $this->quantCombustivel;
+  }
+  
+  static public function radio()
+  {
+    echo "Radio ligado!";
+  }
 }

@@ -5,14 +5,23 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require_once "Carro.php";
+require_once "Motor/MotorBase.php";
+require_once "Motor/Motor16.php";
+require_once "Motor/Motor20.php";
 
-$carro = new Carro("Verde");
-$carro2 = new Carro("Preto");
-$carro3 = new Carro();
+$motor20 = new Motor20();
+$motor16 = new Motor16();
 
-$carro->marca = "Audi";
-echo $carro->modelo;
+print_r($motor16);
 
-var_dump ($carro);
+$carro = new Carro("Verde", $motor20);
+
+$carro->abastecer(4);
+$carro->ligar();
+print_r($carro);
+
+
+
+
 
 
