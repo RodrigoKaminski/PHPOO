@@ -1,0 +1,6 @@
+{
+    "name": "rodrigokaminski/phpoo",
+    "require": {
+        "monolog/monolog": "^1.21"
+    }
+}

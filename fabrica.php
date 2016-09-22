@@ -8,17 +8,32 @@ require_once "Carro.php";
 require_once "Motor/MotorBase.php";
 require_once "Motor/Motor16.php";
 require_once "Motor/Motor20.php";
+require_once "Motor/Motor20Turbo.php";
+require_once './Roda/RodaAco.php';
+require_once './Acessorios/MotorBase.php';
 
-$motor20 = new Motor20();
-$motor16 = new Motor16();
+require_once './vendor/autoload.php';
 
-print_r($motor16);
+$log = new MonoLog\Logger();
+$motorAgua = new Bosh\Motor\MotorBase();
 
-$carro = new Carro("Verde", $motor20);
+$motor20= new Ford\Motor\Motor20();
+$motor16 = new Ford\Motor\Motor16();
+$motorTurbo =  new Ford\Motor\Motor20Turbo();
 
-$carro->abastecer(4);
+$roda = new RodaAco();
+
+$carro = new Ford\Carro("Verde", $motorTurbo);
+
+$carro->abastecer(10);
 $carro->ligar();
-print_r($carro);
+$carro->acelerar(50);
+
+
+print_r($roda);
+
+print_r($roda->jsonSerialize());
+
 
 
 

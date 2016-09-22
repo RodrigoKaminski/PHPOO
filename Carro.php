@@ -1,10 +1,12 @@
 <?php
-
+namespace Ford;
+use Ford\Motor\MotorBase as MotorFord;
+use Bosh\Motor\MotorBase as MotorBosch;
 class Carro
 {
 
   public $cor;
-  private $potencia;
+  
   private $quantCombustivel;
   
   const MARCA = "Ford";
@@ -36,14 +38,22 @@ class Carro
     return $this->$atributo;
   }
   
-  private function andar()
-  {
   
+  /**
+  * @param float torque
+  * 
+  */
+  
+  private function andar($torque)
+  {
+    $combustivelGasto = $torque / 100;
+    $this->quantCombustivel -= $combustivelGasto;
   }
   
-  public function acelerar()
+  public function acelerar($potencia)
   {
-  
+    $torque = $this->motor->acelerar($potencia);
+    $this->andar($torque);
   }
   
   public function frear()
@@ -54,14 +64,18 @@ class Carro
   public function ligar()
   {
    try{
-   if ($this->marcadorCombustivel() > 0)
-   {
-    $this->motor->ligar(true);
-   }
-      } catch(Exception $e)
+   
+   $quant = $this->marcadorCombustivel();
+   
+   }catch(Exception $e)
       {
       echo $e->getMessage();
       }
+      
+      if ($quant > 0)
+   {
+    $this->motor->ligar(true);
+   }
   }
     
   public function desligar()
@@ -94,4 +108,10 @@ class Carro
   {
     echo "Radio ligado!";
   }
+  
+  public function getPotencia()
+  {
+      return $this->motor->getPotencia();
+  }
+  
 }
